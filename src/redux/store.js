@@ -11,6 +11,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { authReducer } from './auth/auth.reducer';
 
 import { modalReducer } from './modal/modal.reducer';
 import { postDetailsReducer } from './postDetails/postDetails.reducer';
@@ -28,6 +29,7 @@ export const store = configureStore({
     productsStore: persistReducer(productsConfig, productsReducer),
     modal: modalReducer,
     magazine: postDetailsReducer,
+    auth: authReducer,
   },
 
   middleware: getDefaultMiddleware =>
