@@ -21,7 +21,12 @@ const productsConfig = {
   key: 'products',
   storage,
   whitelist: ['products'],
-  // blacklist: ['isLoading', 'error'],
+};
+
+const authConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['token'],
 };
 
 export const store = configureStore({
@@ -29,7 +34,7 @@ export const store = configureStore({
     productsStore: persistReducer(productsConfig, productsReducer),
     modal: modalReducer,
     magazine: postDetailsReducer,
-    auth: authReducer,
+    auth: persistReducer(authConfig, authReducer),
   },
 
   middleware: getDefaultMiddleware =>

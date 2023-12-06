@@ -1,5 +1,7 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { refreshThunk } from 'redux/auth/auth.reducer';
 import Layout from './Layout/Layout';
 import Loader from './Loader/Loader';
 
@@ -11,30 +13,12 @@ const LoginPage = lazy(() => import('pages/LoginPage'));
 const RegisterPage = lazy(() => import('pages/RegisterPage'));
 const ContactsPage = lazy(() => import('pages/ContactsPage'));
 
-/*
-1. Обгорнути весь App в компонент BrowserRouter
-2. Прописати маршрути та компоненти Link|NavLink 
-3. Підготувати компоненти Route для кожноъ сторінки за певною адресою.
-4. Якщо нам потрібно зробити шаблонну сторінку для багатьох однотипних даних,
-    нам потрібно використовувати динамічні параметри '/posts/:postId'
-5. Щоб у користувача була змога потрабити на конкретну шаблонну сторінку 
-    ми у компоненті Link або NavLink вказуємо маршрут наступним чином <Link to={`/posts/${post.id}`}>
-
-
-Етапи роботи з маршрутеризацією:
-1. Змінити адресний рядок браузера за допомогою компонти Link або NavLink маршрут вказуємо 
-   в (пропс to).
-2. Підготувати компонент Route для відображення конкретної сторінки за певним 
-   шляхом(пропс path).
-
-РЕМАРКА!!!
-Тег <a href="..." target="_blank" rel="noopener noreferrer"></a> Ми використовуємо для 
-   всіх зовнішніх посиланнь(фейсбук, гугель, ютубе, інтаграми).
-Тег <NavLink to="..."></NavLink> або <Link to="..."></Link> Ми використовуємо виключно 
-   для навігації всередині нашого додатку.
-*/
-
 export const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(refreshThunk());
+  }, [dispatch]);
+
   return (
     <Layout>
       <Suspense fallback={<Loader />}>
